@@ -20,14 +20,17 @@ add_executable(test
 )
 
 add_executable(benchmark
-     benchmarks/benchmark_kvstore.cpp
-     src/kvstore.cpp
-     src/thread_pool.cpp
-     src/lru_cache.cpp
-     src/persistence.cpp
- )
+    benchmarks/benchmark_kvstore.cpp
+    src/kvstore.cpp
+    src/thread_pool.cpp
+    src/lru_cache.cpp
+    src/persistence.cpp
+)
+
+find_package(Threads REQUIRED)
 
 target_compile_options(fastkv PRIVATE -Wall -Wextra -Wpedantic)
 
-find_package(Threads REQUIRED)
-target_link_libraries(fastkv PRIVATE Threads::Threads)
+target_link_libraries(fastkv     PRIVATE Threads::Threads)
+target_link_libraries(test       PRIVATE Threads::Threads)
+target_link_libraries(benchmark  PRIVATE Threads::Threads)
